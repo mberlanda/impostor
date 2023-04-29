@@ -35,27 +35,27 @@ func prepareUserDb(users ...*models.User) *UserDb {
 
 	wg.Wait()
 
-	return userDb
+	return &userDb
 }
 
 func TestPrepareUserDbWhenEmptyUserList(t *testing.T) {
 	userDb := prepareUserDb()
-	assert.Equal(t, 0, len(userDb.m))
+	assert.Equal(t, 0, userDb.Size())
 }
 
 func TestAddUserDbWhenSingletonUserList(t *testing.T) {
 	userDb := prepareUserDb(userOne)
-	assert.Equal(t, 1, len(userDb.m))
+	assert.Equal(t, 1, userDb.Size())
 }
 
 func TestAddUserDbWhenMultiItemsUserList(t *testing.T) {
 	userDb := prepareUserDb(userOne, userTwo)
-	assert.Equal(t, 2, len(userDb.m))
+	assert.Equal(t, 2, userDb.Size())
 }
 
 func TestAddUserDbWhenDuplicatedUserList(t *testing.T) {
 	userDb := prepareUserDb(userOne, userOne, userTwo)
-	assert.Equal(t, 2, len(userDb.m))
+	assert.Equal(t, 2, userDb.Size())
 }
 
 func TestGetUserDbWhenKeyPresent(t *testing.T) {

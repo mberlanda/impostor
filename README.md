@@ -11,7 +11,7 @@ The databases used by the application are in-memory concurrent safe maps.
 ### Run unit tests
 
 ```
-go test -v db/*.go
+go test -v ./...
 ```
 
 ### Run with docker

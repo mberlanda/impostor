@@ -11,8 +11,8 @@ type UserDb struct {
 	mux *sync.RWMutex
 }
 
-func InitUserDb() *UserDb {
-	return &UserDb{
+func InitUserDb() UserDb {
+	return UserDb{
 		m:   make(map[int]*models.User),
 		mux: &sync.RWMutex{},
 	}
@@ -36,12 +36,27 @@ func (u *UserDb) Get(key int) (*models.User, bool) {
 }
 
 func (u *UserDb) Delete(key int) bool {
-	u.mux.RLock()
+	u.mux.Lock()
 	_, found := u.m[key]
 	if found {
 		delete(u.m, key)
 	}
-	u.mux.RUnlock()
+	u.mux.Unlock()
 
 	return found
+}
+
+func (u *UserDb) Size() int {
+	if u.m == nil {
+		return 0
+	}
+	return len(u.m)
+}
+
+func (u *UserDb) All() []*models.User {
+	users := make([]*models.User, 0, u.Size())
+	for _, u := range u.m {
+		users = append(users, u)
+	}
+	return users
 }
