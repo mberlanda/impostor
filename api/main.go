@@ -1,13 +1,23 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/mberlanda/impostor/api/controller"
+	"github.com/mberlanda/impostor/api/db"
+	"github.com/mberlanda/impostor/api/repository"
+	"github.com/mberlanda/impostor/api/routes"
+	"github.com/mberlanda/impostor/api/service"
+)
 
 func main() {
-	r := gin.Default()
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+
+	router := routes.NewGinRouter()
+
+	userDb := db.InitUserDb()
+	userRepository := repository.NewUserRepository(&userDb)
+	userService := service.NewUserService(&userRepository)
+	userController := controller.NewUserController(&userService)
+	userRoute := routes.NewUserRoute(&userController, &router)
+	userRoute.Setup()
+
+	router.Gin.Run(":8080")
 }

@@ -29,3 +29,5 @@ and then visit http://localhost:8080/ping
 * https://chemidy.medium.com/create-the-smallest-and-secured-golang-docker-image-based-on-scratch-4752223b7324
 * https://dev.to/sreramk/go-loadanddelete-and-loadorstore-in-sync-map-why-are-they-needed-30f7
 * https://blog.boot.dev/golang/golang-mutex
+* https://dev.to/umschaudhary/blog-with-go-gin-mysql-and-docker-part-2-3k8n
+* https://blog.logrocket.com/gin-binding-in-go-a-tutorial-with-examples/
